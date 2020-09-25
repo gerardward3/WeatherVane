@@ -20,11 +20,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(toolbar))
+
+        getForecast("2648579")
+    }
+
+    private fun getForecast(locationId: String): Unit {
         val windData = findViewById<TextView>(R.id.windData)
         val description = findViewById<TextView>(R.id.description)
 
         val queue = Volley.newRequestQueue(this)
-        val locationId: String = "2648579"
         val url = "https://weather-broker-cdn.api.bbci.co.uk/en/mobile/$locationId"
 
         val stringRequest = JsonObjectRequest(
@@ -46,6 +50,7 @@ class MainActivity : AppCompatActivity() {
             Response.ErrorListener { windData.text = "That didn't work!" })
 
         queue.add(stringRequest)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
