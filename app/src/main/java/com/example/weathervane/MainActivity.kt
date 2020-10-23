@@ -3,9 +3,7 @@ package com.example.weathervane
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.animation.Animation
-import android.view.animation.LinearInterpolator
-import android.view.animation.RotateAnimation
+import android.view.animation.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -62,34 +60,35 @@ class MainActivity : AppCompatActivity() {
         return locationName
     }
 
-    fun animateVane(windDirection: String) {
+    private fun animateVane(windDirection: String) {
         when (windDirection) {
-            "NE" -> rotateVane(45)
-            "E" -> rotateVane(90)
-            "SE" -> rotateVane(135)
-            "S" -> rotateVane(180)
-            "SW" -> rotateVane(225)
-            "W" -> rotateVane(270)
-            "NW" -> rotateVane(315)
+            "SW" -> rotateVane(45)
+            "W" -> rotateVane(90)
+            "NW" -> rotateVane(135)
+            "N" -> rotateVane(180)
+            "NE" -> rotateVane(225)
+            "E" -> rotateVane(270)
+            "SE" -> rotateVane(315)
             else -> {
                 rotateVane(0)
             }
         }
     }
 
-    fun rotateVane(degrees: Int) {
+    private fun rotateVane(degrees: Int) {
         val rotate = RotateAnimation(
             0F,
-            degrees.toFloat(),
+            720 + degrees.toFloat(),
             Animation.RELATIVE_TO_SELF,
             0.5f,
             Animation.RELATIVE_TO_SELF,
             0.5f
         )
 
-        rotate.duration = 1000
-        rotate.interpolator = LinearInterpolator()
+        rotate.duration = 4000
+        rotate.interpolator = OvershootInterpolator()
         rotate.fillAfter = true
+        rotate.repeatCount = 0
 
         val vane = findViewById<ImageView>(R.id.imageView)
         vane.startAnimation(rotate)

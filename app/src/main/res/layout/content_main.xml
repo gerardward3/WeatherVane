@@ -10,26 +10,27 @@
         android:id="@+id/windData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="@string/loading"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.641" />
+        app:layout_constraintVertical_bias="0.723" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:gravity="center"
         android:text="@string/loading"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/windData"
-        app:layout_constraintVertical_bias="0.095" />
+        app:layout_constraintVertical_bias="0.071" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -37,9 +38,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/windData"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.834"
+        app:layout_constraintVertical_bias="0.727"
         app:srcCompat="@drawable/ic_baseline_arrow_upward_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>
