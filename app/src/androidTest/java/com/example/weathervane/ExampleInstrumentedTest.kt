@@ -1,5 +1,9 @@
 package com.example.weathervane
 
+import androidx.lifecycle.Lifecycle
+import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.Espresso.onView
+import androidx.test.core.app.launchActivity
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
@@ -20,5 +24,13 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.weathervane", appContext.packageName)
+    }
+
+    @Test
+    fun getForecast_locationIsCorrect() {
+        val activity: MainActivity = MainActivity()
+        val location = activity.getForecast("2651088")
+        assertEquals(location, "Dornoch")
+
     }
 }

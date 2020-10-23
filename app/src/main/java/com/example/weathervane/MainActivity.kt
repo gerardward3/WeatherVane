@@ -1,18 +1,21 @@
 package com.example.weathervane
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
+import android.widget.ImageView
 import android.widget.TextView
-import com.example.weathervane.R.id.toolbar
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import org.json.JSONArray
+import com.example.weathervane.R.id.toolbar
 import org.json.JSONObject
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,7 +27,8 @@ class MainActivity : AppCompatActivity() {
         getForecast("2648579")
     }
 
-    private fun getForecast(locationId: String): Unit {
+    fun getForecast(locationId: String): String {
+        var locationName: String = "Error"
         val windData = findViewById<TextView>(R.id.windData)
         val description = findViewById<TextView>(R.id.description)
 
@@ -40,17 +44,55 @@ class MainActivity : AppCompatActivity() {
                 val report = summary.getJSONObject("report")
                 val windSpeedMph = report.getInt("windSpeedMph")
                 val windDescription = report.getString("windDescription")
+                val windDirection = report.getString("windDirection")
 
                 val location = response.getJSONObject("location").getString("name")
+                locationName = location
 
                 windData.text = "Wind speed is $windSpeedMph miles per hour in $location."
                 description.text = "$windDescription."
+                animateVane(windDirection)
 
             },
-            Response.ErrorListener { windData.text = "That didn't work!" })
+            Response.ErrorListener {
+                windData.text = "That didn't work!"
+            })
 
         queue.add(stringRequest)
+        return locationName
+    }
 
+    fun animateVane(windDirection: String) {
+        when (windDirection) {
+            "NE" -> rotateVane(45)
+            "E" -> rotateVane(90)
+            "SE" -> rotateVane(135)
+            "S" -> rotateVane(180)
+            "SW" -> rotateVane(225)
+            "W" -> rotateVane(270)
+            "NW" -> rotateVane(315)
+            else -> {
+                rotateVane(0)
+            }
+        }
+    }
+
+    fun rotateVane(degrees: Int) {
+        val rotate = RotateAnimation(
+            0F,
+            degrees.toFloat(),
+            Animation.RELATIVE_TO_SELF,
+            0.5f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f
+        )
+
+        rotate.duration = 1000
+        rotate.interpolator = LinearInterpolator()
+        rotate.fillAfter = true
+
+        val vane = findViewById<ImageView>(R.id.imageView)
+        vane.startAnimation(rotate)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
