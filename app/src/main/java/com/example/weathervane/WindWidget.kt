@@ -57,7 +57,8 @@ internal fun updateAppWidget(
 
     var windSpeedText = ""
     val queue = Volley.newRequestQueue(context)
-    val url = "https://weather-broker-cdn.api.bbci.co.uk/en/mobile/2648579"
+    val locationId = "1283240"
+    val url = "https://weather-broker-cdn.api.bbci.co.uk/en/mobile/$locationId"
 
     val stringRequest = JsonObjectRequest(
         Request.Method.GET, url, null,
@@ -69,10 +70,21 @@ internal fun updateAppWidget(
             val windSpeedMph = report.getInt("windSpeedMph")
             val windDirection = report.getString("windDirection")
             windSpeedText = windSpeedMph.toString()
-            // animateVane(windDirection)
-
 
             views.setTextViewText(R.id.WindButton, windSpeedText)
+            views.setTextViewText(R.id.widgetLocationName, response.getJSONObject("location").getString("name"))
+            when (windDirection) {
+                "NE" -> views.setInt(R.id.WindButton, "setBackgroundResource", R.drawable.wheel_sw)
+                "E" -> views.setInt(R.id.WindButton, "setBackgroundResource", R.drawable.wheel_w)
+                "SE" -> views.setInt(R.id.WindButton, "setBackgroundResource", R.drawable.wheel_nw)
+                "S" -> views.setInt(R.id.WindButton, "setBackgroundResource", R.drawable.wheel_n)
+                "SW" -> views.setInt(R.id.WindButton, "setBackgroundResource", R.drawable.wheel_ne)
+                "W" -> views.setInt(R.id.WindButton, "setBackgroundResource", R.drawable.wheel_e)
+                "NW" -> views.setInt(R.id.WindButton, "setBackgroundResource", R.drawable.wheel_se)
+                else -> {
+                    views.setInt(R.id.WindButton, "setBackgroundResource", R.drawable.wheel_s)
+                }
+            }
             appWidgetManager.updateAppWidget(appWidgetId, views)
 
 
@@ -87,20 +99,14 @@ internal fun updateAppWidget(
 
 }
 
-private fun animateVane(windDirection: String, views: RemoteViews) {
-    when (windDirection) {
-        "SW" -> rotateVane(45, views)
-        "W" -> rotateVane(90, views)
-        "NW" -> rotateVane(135, views)
-        "N" -> rotateVane(180, views)
-        "NE" -> rotateVane(225, views)
-        "E" -> rotateVane(270, views)
-        "SE" -> rotateVane(315, views)
-        else -> {
-            rotateVane(0, views)
-        }
-    }
-}
+//private fun animateVane(windDirection: String, views: RemoteViews) {
+//    when (windDirection) {
+//        "E" -> views.setImageViewResource(R.id.WindButton, R.drawable.wheel_n)
+//        else -> {
+//            views.setImageViewResource(R.id.WindButton, R.drawable.wheel_s)
+//        }
+//    }
+//}
 
 private fun rotateVane(degrees: Int, views: RemoteViews) {
     // views.setImageViewResource(R.id.WindButton, R.id.WindButton)

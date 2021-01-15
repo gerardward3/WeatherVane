@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeatherVane</string>
+    <string name="app_name">BBC Weather Vane</string>
     <string name="action_settings">Settings</string>
     <string name="loading">Loading...</string>
     <!-- Strings used for fragments for navigation -->

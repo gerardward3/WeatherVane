@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(toolbar))
 
-        getForecast("2648579")
+        getForecast("1283240")
     }
 
     fun getForecast(locationId: String): String {
