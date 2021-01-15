@@ -1,8 +1,10 @@
 package com.example.weathervane
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.animation.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -35,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         val stringRequest = JsonObjectRequest(
             Request.Method.GET, url, null,
-            Response.Listener { response ->
+            { response ->
                 // Display the first 500 characters of the response string.
                 val forecasts = response.getJSONArray("forecasts")[0] as JSONObject
                 val summary = forecasts.getJSONObject("summary")
@@ -49,10 +51,15 @@ class MainActivity : AppCompatActivity() {
 
                 windData.text = "Wind speed is $windSpeedMph miles per hour in $location."
                 description.text = "$windDescription."
+
                 animateVane(windDirection)
 
+                val vaneText = findViewById<TextView>(R.id.centreText)
+                vaneText.text = windSpeedMph.toString()
+
+
             },
-            Response.ErrorListener {
+            {
                 windData.text = "That didn't work!"
             })
 
@@ -62,20 +69,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun animateVane(windDirection: String) {
         when (windDirection) {
-            "SW" -> rotateVane(45)
-            "W" -> rotateVane(90)
-            "NW" -> rotateVane(135)
-            "N" -> rotateVane(180)
-            "NE" -> rotateVane(225)
-            "E" -> rotateVane(270)
-            "SE" -> rotateVane(315)
+            "SW" -> rotateVane(45, windDirection)
+            "W" -> rotateVane(90, windDirection)
+            "NW" -> rotateVane(135, windDirection)
+            "N" -> rotateVane(180, windDirection)
+            "NE" -> rotateVane(225, windDirection)
+            "E" -> rotateVane(270, windDirection)
+            "SE" -> rotateVane(315, windDirection)
             else -> {
-                rotateVane(0)
+                rotateVane(0, windDirection)
             }
         }
     }
 
-    private fun rotateVane(degrees: Int) {
+    private fun rotateVane(degrees: Int, windDirection: String) {
         val rotate = RotateAnimation(
             0F,
             720 + degrees.toFloat(),
@@ -92,6 +99,8 @@ class MainActivity : AppCompatActivity() {
 
         val vane = findViewById<ImageView>(R.id.imageView)
         vane.startAnimation(rotate)
+        val vaneText = findViewById<TextView>(R.id.centreText)
+        vaneText.text = windDirection
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

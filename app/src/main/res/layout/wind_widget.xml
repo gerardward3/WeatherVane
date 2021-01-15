@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000099CC"
+    android:backgroundTint="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="@dimen/widget_margin">
+
+    <Button
+        android:id="@+id/WindButton"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_wheel_12"
+        android:backgroundTint="#09c"
+        android:text="--"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Glasgow"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_light" />
+
+
+</LinearLayout>

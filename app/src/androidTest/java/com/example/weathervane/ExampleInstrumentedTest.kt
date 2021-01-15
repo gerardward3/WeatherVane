@@ -1,9 +1,5 @@
 package com.example.weathervane
 
-import androidx.lifecycle.Lifecycle
-import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.Espresso.onView
-import androidx.test.core.app.launchActivity
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
@@ -31,6 +27,5 @@ class ExampleInstrumentedTest {
         val activity: MainActivity = MainActivity()
         val location = activity.getForecast("2651088")
         assertEquals(location, "Dornoch")
-
     }
 }
